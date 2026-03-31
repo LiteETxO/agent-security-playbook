@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download — Agent Security Playbook</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:        #0a0a0a;
+      --bg-card:   #111111;
+      --bg-card2:  #161616;
+      --border:    #1f1f1f;
+      --border-hi: #2a2a2a;
+      --accent:    #ff3a3a;
+      --accent-dim:#cc2e2e;
+      --accent-glow: rgba(255, 58, 58, 0.15);
+      --accent-glow2: rgba(255, 58, 58, 0.08);
+      --text:      #f0f0f0;
+      --text-muted:#888888;
+      --text-faint:#555555;
+      --green:     #22c55e;
+      --yellow:    #f59e0b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── SUCCESS HEADER ─────────────────────────────────────── */
+    .success-header {
+      padding: 72px 0 56px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 2px solid rgba(34, 197, 94, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+
+    .success-title {
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .success-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ─── DOWNLOAD CARD ──────────────────────────────────────── */
+    .download-section {
+      padding-bottom: 56px;
+    }
+
+    .download-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hi);
+      border-radius: 16px;
+      padding: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .download-card-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .download-file-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(255,58,58,0.25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .download-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .download-card-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 28px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn-download:hover {
+      background: var(--accent-dim);
+      transform: translateY(-1px);
+    }
+
+    /* ─── WHAT YOU GET ───────────────────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .what-section {
+      padding-bottom: 56px;
+    }
+
+    .what-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .what-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .what-item:last-child {
+      border-bottom: none;
+    }
+
+    .what-check {
+      width: 20px;
+      height: 20px;
+      background: rgba(34,197,94,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .what-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .what-text span {
+      color: var(--text-muted);
+      font-size: 13px;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ─── UPGRADE SECTION ────────────────────────────────────── */
+    .upgrade-section {
+      padding-bottom: 56px;
+    }
+
+    .upgrade-card {
+      background: var(--bg-card2);
+      border: 1px solid var(--border-hi);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 24px 28px;
+    }
+
+    .upgrade-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .upgrade-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .upgrade-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .upgrade-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ─── SUPPORT ────────────────────────────────────────────── */
+    .support-section {
+      padding-bottom: 72px;
+    }
+
+    .support-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+    }
+
+    .support-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .support-text {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .support-text a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .support-text a:hover { text-decoration: underline; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-brand {
+      font-size: 14px;
+      color: var(--text-faint);
+    }
+
+    .footer-brand strong { color: var(--text-muted); }
+
+    .footer-atxo {
+      font-size: 13px;
+      color: var(--text-faint);
+    }
+
+    .footer-atxo span { color: var(--text-muted); font-weight: 600; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 56px;
+    }
+
+    @media (max-width: 580px) {
+      .download-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn-download {
+        width: 100%;
+        justify-content: center;
+      }
+      .success-header { padding: 48px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ───────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1L13 4V10L7 13L1 10V4L7 1Z" fill="white" opacity="0.9"/>
+        </svg>
+      </div>
+      Agent Security Playbook
+    </a>
+  </div>
+</nav>
+
+<!-- ─── SUCCESS HEADER ────────────────────────────────────────── -->
+<div class="success-header">
+  <div class="container">
+    <div class="success-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <h1 class="success-title">You're in. Your playbook<br>is ready to download.</h1>
+    <p class="success-sub">The complete 40-page Agent Security Playbook — plain English, practitioner-grade, ready to use.</p>
+  </div>
+</div>
+
+<!-- ─── DOWNLOAD ───────────────────────────────────────────────── -->
+<div class="download-section">
+  <div class="container">
+    <div class="download-card">
+      <div class="download-card-left">
+        <div class="download-file-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </div>
+        <div>
+          <div class="download-card-title">Agent Security Playbook — PDF</div>
+          <div class="download-card-meta">PDF · 40 pages · Instant access</div>
+        </div>
+      </div>
+      <a href="/product/playbook.pdf" class="btn-download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><!-- --></div>
+
+<!-- ─── WHAT YOU GET ───────────────────────────────────────────── -->
+<div class="what-section">
+  <div class="container">
+    <div class="section-label">Your Purchase</div>
+    <h2 class="section-heading">What's in the playbook</h2>
+    <p class="section-sub">40 pages. 7 threats. Concrete guidance throughout.</p>
+
+    <div class="what-list">
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Introduction: Why Agent Security Is Different
+          <span>The mental model shift that changes how you think about AI risk</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Quick Start: 10 Things To Do Today
+          <span>High-leverage actions ranked by impact — start here</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Prompt Injection (OWASP #1) — 5 pages
+          <span>Direct vs. indirect injection, real attack scenarios, layered defenses</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Excessive Agency — how to audit your agent's permissions
+          <span>Principle of least privilege applied to AI agents</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Credential & Secret Theft — how agents leak secrets
+          <span>Common exposure patterns, secrets manager setup, prevention</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Data Exfiltration Through Outputs
+          <span>How private data ends up in public places — and how to stop it</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Supply Chain Vulnerabilities — vetting tools and plugins
+          <span>Every third-party component is a risk surface</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Insecure Output Execution — SQL injection via agents, code risks
+          <span>Agent-mediated injection attacks and sandboxing</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Identity Spoofing — impersonation attacks, multi-agent trust
+          <span>How to verify agent identity and prevent impersonation</span>
+        </div>
+      </div>
+      <div class="what-item">
+        <div class="what-check">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="what-text">
+          Glossary &amp; Resources
+          <span>Key terms and further reading from OWASP, NIST, MITRE ATLAS, and more</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><!-- --></div>
+
+<!-- ─── UPGRADE SECTION ────────────────────────────────────────── -->
+<div class="upgrade-section">
+  <div class="container">
+    <div class="upgrade-card">
+      <div class="upgrade-title">Want the templates, checklists, and red team tests too?</div>
+      <div class="upgrade-text">Upgrade to the Full Toolkit and get 4 copy-paste system prompt templates, a 25-point pre-flight checklist, an incident response runbook, and 5 red team test scenarios — on top of the playbook you already own.</div>
+      <a href="/#pricing" class="upgrade-link">
+        View upgrade options
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SUPPORT ─────────────────────────────────────────────────── -->
+<div class="support-section">
+  <div class="container">
+    <div class="support-card">
+      <div class="support-title">Questions?</div>
+      <div class="support-text">Email us at <a href="mailto:support@atxo.me">support@atxo.me</a> — we're happy to help.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      © 2026 <strong>Agent Security Playbook</strong>
+    </div>
+    <div class="footer-right">
+      <span class="footer-atxo">A product by <span>ATXO Labs</span></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
