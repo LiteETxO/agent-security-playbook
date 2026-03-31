@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback — Agent Security Playbook</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:        #0a0a0a;
+      --bg-card:   #111111;
+      --bg-card2:  #161616;
+      --border:    #1f1f1f;
+      --border-hi: #2a2a2a;
+      --border-focus: #3a3a3a;
+      --accent:    #ff3a3a;
+      --accent-dim:#cc2e2e;
+      --accent-glow: rgba(255, 58, 58, 0.15);
+      --accent-glow2: rgba(255, 58, 58, 0.08);
+      --text:      #f0f0f0;
+      --text-muted:#888888;
+      --text-faint:#555555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────────── */
+    .page-header {
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+
+    .page-title {
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+
+    .page-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 440px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ─── FORM ───────────────────────────────────────────────── */
+    .form-section {
+      padding-bottom: 80px;
+    }
+
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hi);
+      border-radius: 16px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .form-label-optional {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-faint);
+      margin-left: 6px;
+    }
+
+    /* Radio group */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .radio-option:hover {
+      border-color: var(--border-focus);
+      background: #1a1a1a;
+    }
+
+    .radio-option input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border-focus);
+      border-radius: 50%;
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.15s;
+    }
+
+    .radio-option input[type="radio"]:checked {
+      border-color: var(--accent);
+    }
+
+    .radio-option input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .radio-option:has(input:checked) {
+      border-color: rgba(255,58,58,0.4);
+      background: var(--accent-glow2);
+    }
+
+    .radio-label {
+      font-size: 14px;
+      color: var(--text);
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    /* Textarea */
+    textarea {
+      width: 100%;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 100px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    textarea::placeholder {
+      color: var(--text-faint);
+    }
+
+    textarea:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* Email input */
+    input[type="email"] {
+      width: 100%;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="email"]::placeholder {
+      color: var(--text-faint);
+    }
+
+    input[type="email"]:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* Submit */
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 16px 32px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-dim);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* ─── THANK YOU STATE ────────────────────────────────────── */
+    .thankyou {
+      display: none;
+      text-align: center;
+      padding: 64px 0;
+    }
+
+    .thankyou.visible {
+      display: block;
+    }
+
+    .thankyou-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 2px solid rgba(34, 197, 94, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .thankyou-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .thankyou-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .thankyou-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 28px;
+      transition: opacity 0.15s;
+    }
+
+    .thankyou-back:hover { opacity: 0.8; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-brand {
+      font-size: 14px;
+      color: var(--text-faint);
+    }
+
+    .footer-brand strong { color: var(--text-muted); }
+
+    .footer-atxo {
+      font-size: 13px;
+      color: var(--text-faint);
+    }
+
+    .footer-atxo span { color: var(--text-muted); font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .form-card {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ───────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1L13 4V10L7 13L1 10V4L7 1Z" fill="white" opacity="0.9"/>
+        </svg>
+      </div>
+      Agent Security Playbook
+    </a>
+  </div>
+</nav>
+
+<!-- ─── HEADER ────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="container">
+    <h1 class="page-title">Help us make this better</h1>
+    <p class="page-sub">3 questions. 60 seconds. Your answers directly shape the next version.</p>
+  </div>
+</div>
+
+<!-- ─── FORM ──────────────────────────────────────────────────── -->
+<div class="form-section">
+  <div class="container">
+
+    <div id="form-wrapper">
+      <form class="form-card" id="feedback-form" novalidate>
+
+        <div class="form-group">
+          <div class="form-label">Have you implemented anything from the playbook yet?</div>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="implemented" value="yes_fully" />
+              <span class="radio-label">Yes, fully</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="implemented" value="started_stuck" />
+              <span class="radio-label">Started but got stuck</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="implemented" value="not_yet" />
+              <span class="radio-label">Not yet</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="hardest">What was the hardest part to implement?</label>
+          <textarea id="hardest" name="hardest" placeholder="e.g. Setting up the pre-flight checklist for existing agents, understanding the injection test scenarios…" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="missing">What is missing that would make this 10x more useful?</label>
+          <textarea id="missing" name="missing" placeholder="e.g. More examples for multi-agent pipelines, video walkthroughs, templates for tool-calling agents…" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Your email <span class="form-label-optional">optional — if you want us to follow up</span></label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" />
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Send Feedback
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+
+      </form>
+    </div>
+
+    <div class="thankyou" id="thankyou">
+      <div class="thankyou-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="thankyou-title">Thank you. We read every response.</div>
+      <div class="thankyou-sub">Your feedback will shape the next version of the playbook.</div>
+      <a href="/download.html" class="thankyou-back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to downloads
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      © 2026 <strong>Agent Security Playbook</strong>
+    </div>
+    <div>
+      <span class="footer-atxo">A product by <span>ATXO Labs</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('feedback-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('form-wrapper').style.display = 'none';
+    const thankyou = document.getElementById('thankyou');
+    thankyou.classList.add('visible');
+    thankyou.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>
+
+</body>
+</html>
